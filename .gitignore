@@ -1,0 +1,5 @@
+.venv
+.vscode
+logs
+CAAB_docs
+.env
