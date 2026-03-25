@@ -1,0 +1,23 @@
+# CAAB/utils/enums.py
+
+from enum import IntEnum
+
+class DealerStatus(IntEnum):
+    APPROVED = 1
+    REJECTED = 2
+    DRAFT = 3
+    COMPLETED = 4
+
+class DealerStage(IntEnum):
+    DEALER_CREATION = 1
+    CREDIT_ANALYSIS = 2
+    AGREEMENT = 3
+    AGREEMENT_APPROVAL = 4
+    NEW_BP = 5
+    CREATE_IBAN = 6
+    BUSINESS_AGREEMENT = 7
+    SALES_REPRESENTATIVE_INFO = 8
+    CREATE_SALES_REPRESENTATIVE_INFO = 9
+    FEE_ASSIGNMENT = 10
+    POLICY_SIGNATURE_CONTROL = 11
+    CREDIT_LINE_ACTIVATION = 12

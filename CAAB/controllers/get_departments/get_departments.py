@@ -7,5 +7,3 @@ def get_departments():
     dept = Department.query.all()
     departments_list = [Department.to_dict(depts) for depts in dept]
     return(jsonify(departments_list))
-
-

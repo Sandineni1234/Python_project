@@ -11,9 +11,9 @@ from .controllers.get_dropdowns import dropdowns_bp
 from .controllers.navigation import navigator_bp
 from .controllers.Dealer import Dealer_bp
 from flask_jwt_extended import JWTManager, create_access_token, jwt_required
-from datetime import timedelta
 from flask_http_middleware import MiddlewareManager
 from CAAB.middlewares.logger import LoggingMiddleware 
+from datetime import timedelta, datetime, timezone
 
 load_dotenv()
 
@@ -21,7 +21,11 @@ def create_app():
     app = Flask(__name__ )
     # CORS(app, support_credentials=True)
     CORS(app)
+    with open("private.pem", "r") as f:
+        private_key = f.read()
 
+    with open("public.pem", "r") as f:
+        public_key = f.read()
     db_user = os.getenv("DB_User")
     db_password = quote_plus(os.getenv("DB_Password"))
     db_host = os.getenv("DB_Host")
@@ -29,7 +33,9 @@ def create_app():
     db_name = os.getenv("DB_Name")
     app.config.from_mapping(
         SECRET_KEY=os.getenv("MY_SECRET_KEY"),
-        JWT_SECRET_KEY = os.getenv("JWT_SECRET_KEY"),
+        JWT_ALGORITHM=os.getenv("JWT_ALGORITHM"),
+        JWT_PRIVATE_KEY= private_key,
+        JWT_PUBLIC_KEY=public_key,
         SQLALCHEMY_DATABASE_URI= f"mysql+mysqlconnector://{db_user}:{db_password}@{db_host}:{db_port}/{db_name}",
         SQLALCHEMY_TRACK_MODIFICATIONS=False,
         JWT_ACCESS_TOKEN_EXPIRES = timedelta(minutes=int(os.getenv("JWT_ACCESS_TOKEN_EXPIRES"))),

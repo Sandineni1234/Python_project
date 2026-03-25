@@ -1,4 +1,5 @@
 from CAAB.db import db
+import bcrypt
 
 class User(db.Model):
     __tablename__ = 'user'
@@ -31,3 +32,6 @@ class User(db.Model):
             "department" : self.department.name if self.department else None,
             "userMenuID" : self.role.id if self.role else None
         }
+
+    def check_password(self, password):
+        return bcrypt.checkpw(password.encode('utf-8'), self.password.encode('utf-8'))
